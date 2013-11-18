@@ -3,13 +3,14 @@
 
 using namespace std;
 
+// m: num of apples n: num of plates
 int f(int m,int n) {
-  if(m == 0 || n == 1)
+  if (m == 0 || n == 1)
     return 1;
-  if(n > m)
-    return f(m, m);
+  else if (m < 0 || n <= 0)
+    return 0;
   else
-    return f(m, n - 1) + f(m - n, n);
+    return f(m, n - 1) + f(m - n, n); // case 0: at least one plate left empty case 1: no plates are left empty
 }
 
 int main() {
