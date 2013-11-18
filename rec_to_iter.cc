@@ -17,8 +17,8 @@ void exmp(int n, int &f) {
 
 // Iter Data Structure
 typedef struct T {
-  int rd, pn, pf, q1, q2;
-} T;
+  int rd, pn, pf, q1, q2;  // rd: return address, pn: n, pf: f 
+} T;                       // q1, q2: return value of recursion calls
 
 class nonrec {
 private:
@@ -35,7 +35,7 @@ void nonrec::replace1(int n, int &f) {
   x.pn = n;
   s.push(x);  // push to the bottom of the stack, as sentinel
 
-label0: 
+label0:
   if ((x = s.top()).pn < 2) {  // base case
     s.pop();
     x.pf = x.pn + 1;
@@ -49,7 +49,7 @@ label0:
   goto label0; // go to its base case
 
 label1:
-  tmp = s.top(); s.pop();
+  tmp = s.top(); s.pop();  // process return value
   x = s.top(); s.pop();
   x.q1 = tmp.pf;
   s.push(x);
@@ -60,7 +60,7 @@ label1:
   goto label0;  // go to its base case
 
 label2:
-  tmp = s.top(); s.pop();
+  tmp = s.top(); s.pop();  // process return value
   x = s.top(); s.pop();
   x.q2 = tmp.pf;
   x.pf = x.q1 * x.q2;
@@ -82,15 +82,14 @@ label3:   // return (exit) handling
 // Optimized
 void nonrec::replace2(int n, int &f) {
   T x, tmp;
-  x.rd = 3; x.pn = n; s.push(x);
+  x.rd = 3; x.pn = n; s.push(x);  // entry point
   do {
-    while ((x = s.top()).pn >= 2) {
-      x.rd = 1;
+    while ((x = s.top()).pn >= 2) {  // keep going down recursion tree until n < 2
+      x.rd = 1;  // first recursion call
       x.pn = (int)(x.pn / 2);
       s.push(x);
     }
-    x = s.top();
-    s.pop();
+    x = s.top(); s.pop();  // original exit point
     x.pf = x.pn + 1;
     s.push(x);
     while ((x = s.top()).rd == 2) {
@@ -113,7 +112,6 @@ void nonrec::replace2(int n, int &f) {
       s.push(tmp);
     }
   } while ((x = s.top()).rd != 3);
-  x = s.top();
-  s.pop();
+  x = s.top(); s.pop();
   f = x.pf;
 }
