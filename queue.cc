@@ -10,19 +10,19 @@ public:
 };
 
 // Based on Array "circular buffer"
-template <class Elem> 
-class Aqueue: public Queue<Elem> {
+template <class T> 
+class Aqueue: public Queue<T> {
 private:
   int size;
   int front;
   int rear;
-  Elem *listArray;
+  T *listArray;
 public:
   AQueue(int sz = DefaultListSize) {
     size = sz + 1;
     rear = 0;
     front = 1;
-    listArray = new Elem[size];
+    listArray = new T[size];
   }
   ~AQueue() {
     delete[] listArray;
@@ -30,19 +30,19 @@ public:
   void clear() {
     front = rear + 1;
   }
-  bool enqueue(const Elem& it) {
+  bool enqueue(const T& it) {
     if (((rear + 2) % size) == front) return false;
     rear = (rear + 1) % size;
     listArray[rear] = it;
     return true;
   }
-  bool dequeue(Elem& it) {
+  bool dequeue(T& it) {
     if (length() == 0) return false;
     it = listArray[front];
     front = (front + 1) % size;
     return true;
   }
-  bool frontValue(Elem& it) const {
+  bool frontValue(T& it) const {
     if (length() == 0) return false;
     it = listArray[front];
   }

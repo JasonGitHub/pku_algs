@@ -65,4 +65,23 @@ public:
   ~lnkStack() {
     clear();
   }
+  bool push(const T item) {
+    Link<T>* tmp = new Link<T>(item, top);
+    top = tmp;
+    ++size;
+    return true;
+  }
+  bool pop(T& item) {
+    Link<T>* tmp;
+    if (size == 0) {
+      cout << "empty stack" << endl;
+      return false;
+    }
+    item = top->data;
+    tmp = top->next;
+    delete top;
+    top = tmp;
+    --size;
+    return true;
+  }
 };
