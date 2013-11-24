@@ -1,23 +1,22 @@
 #include <iostream>
 #include <string>
-#include <algorithm>
+#include <map>
 
 using namespace std;
 
 void Solve(string s, char &c, int &cnt) {
-  int a[26];
-  fill(a, a + 26, 0); 
+  map<char, int> mp;
   for (int i = 0; i < s.size(); ++i) {
-    ++a[tolower(s[i]) - 'a'];
+    ++mp[tolower(s[i])];
   }
   c = 'a';
-  cnt = a[0];
-  for (int i = 0; i < 26; ++i) {
-    if (a[i] > cnt) {
-      c = 'a' + i;
-      cnt = a[i];
+  cnt = mp[c];
+  for (map<char, int>::iterator it = mp.begin(); it != mp.end(); ++it) {
+    if (it->second > cnt) {
+      c = it->first; 
+      cnt = it->second;
     }
-  } 
+  }
 }
 
 int main() {
