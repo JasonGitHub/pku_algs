@@ -1,3 +1,4 @@
+// http://dsalgo.openjudge.cn/dsmoochw4/1/
 #include <iostream>
 #include <string>
 #include <map>
