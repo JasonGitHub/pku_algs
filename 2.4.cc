@@ -16,9 +16,9 @@ static int Pre(char op) {
 }
 
 template <typename T>
-string ToRPE(string expr) {
+string ToRPN(string expr) {
   stringstream in(expr);
-  string rpe;
+  string rpn;
   stack<char> ops;
   char op;
   while (in >> op) {
@@ -26,14 +26,14 @@ string ToRPE(string expr) {
       switch (op) {
         case '(': ops.push(op); break;
         case ')': while (ops.top() != '(') {
-                    rpe = rpe + ops.top() + " ";
+                    rpn = rpn + ops.top() + " ";
                     ops.pop();
                   }
                   ops.pop();
                   break;
         case '+': case '-': case '*': case '/':
                   while (!ops.empty() && ops.top() != '(' && Pre(ops.top()) >= Pre(op)) {
-                    rpe = rpe + ops.top() + " ";
+                    rpn = rpn + ops.top() + " ";
                     ops.pop();
                   }
                   ops.push(op);
@@ -44,14 +44,14 @@ string ToRPE(string expr) {
       in.putback(op);
       T val;
       in >> val;
-      rpe = rpe + to_string(val) + " ";
+      rpn = rpn + to_string(val) + " ";
     }
   }
   while (!ops.empty()) {
-    rpe = rpe + ops.top() + " ";
+    rpn = rpn + ops.top() + " ";
     ops.pop();
   }
-  return rpe;
+  return rpn;
 }
 
 template <typename T>
@@ -100,7 +100,7 @@ int main() {
   for (int i = 0; i < n; ++i) {
     string expr;
     getline(cin, expr);
-    cout << Eval<int>(ToRPE<int>(expr)) << endl;
+    cout << Eval<int>(ToRPN<int>(expr)) << endl;
   }
   return 0;
 }
