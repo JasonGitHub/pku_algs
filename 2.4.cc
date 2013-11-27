@@ -8,31 +8,12 @@
 
 // Assume the expression is correctly formed
 
-#define _DEBUG_
-
 using namespace std;
 
-#ifdef _DEBUG_
-int Pre(char op) {
-  switch(op) {
-    case '+': case '-': return 0;
-    case '*': case '/': return 1;
-  }
-}
-
-string to_string(int val) {
-  stringstream s;
-  s << val;
-  return s.str();
-}
-#endif
-
-#ifndef _DEBUG_
 static int Pre(char op) {
   map<char, int> precedence = {{'+', 0}, {'-', 0}, {'*', 1}, {'/', 1}};
   return precedence[op];
 }
-#endif
 
 template <typename T>
 string ToRPE(string expr) {
